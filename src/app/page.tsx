@@ -199,7 +199,7 @@ function ProjectRow({ p }: { p: Project }) {
 
 function ViewAllProjectsRow({ label }: { label: string }) {
     return (
-        <a href="/projects" className="group relative block w-full overflow-hidden rounded-3xl bg-transparent">
+        <a href="/projects#all-projects" className="group relative block w-full overflow-hidden rounded-3xl bg-transparent">
             <div className="pointer-events-none absolute right-5 top-5 text-black/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 dark:text-white/45">
                 <ArrowIcon />
             </div>
