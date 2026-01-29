@@ -242,6 +242,7 @@ export default function HomePage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [company, setCompany] = useState(""); // honeypot
     const [sending, setSending] = useState(false);
     const [status, setStatus] = useState<null | "ok" | "error">(null);
 
@@ -291,7 +292,7 @@ export default function HomePage() {
             const res = await fetch("/api/contact", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, message }),
+                body: JSON.stringify({ name, email, message, company }),
             });
 
             if (!res.ok) {
@@ -301,6 +302,7 @@ export default function HomePage() {
                 setName("");
                 setEmail("");
                 setMessage("");
+                setCompany(""); // reset honeypot
             }
         } catch {
             setStatus("error");
@@ -516,6 +518,17 @@ export default function HomePage() {
 
                             {/* ✅ FORM: aggiunto onSubmit, senza cambiare classi/layout */}
                             <form className="mt-6 grid gap-4 lg:grid-cols-2" onSubmit={onSubmit}>
+                                {/* ✅ honeypot (hidden) */}
+                                <input
+                                    type="text"
+                                    value={company}
+                                    onChange={(e) => setCompany(e.target.value)}
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                    className="hidden"
+                                    aria-hidden="true"
+                                />
+
                                 <div className="lg:col-span-1">
                                     <label className="mb-2 block text-xs text-black/60 dark:text-white/60">
                                         {t.form.name}
