@@ -6,6 +6,9 @@ import { AppProvider } from "@/app/context/AppContext";
 export const metadata: Metadata = {
     title: "Mickol Roe Baronia Lasquety — Portfolio",
     description: "Portfolio di Mickol Roe Baronia Lasquety. Bio, progetti e contatti.",
+    icons: {
+        icon: "/favicon.png", // oppure /favicon.ico
+    },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
