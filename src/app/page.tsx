@@ -238,6 +238,13 @@ export default function HomePage() {
     const { lang } = useApp();
     const t = dict[lang].homePage;
 
+    // ✅ FORM: stato + invio (AGGIUNTA SOLO QUI)
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+    const [sending, setSending] = useState(false);
+    const [status, setStatus] = useState<null | "ok" | "error">(null);
+
     useEffect(() => {
         const id = requestAnimationFrame(() => setPageIn(true));
         return () => cancelAnimationFrame(id);
@@ -271,6 +278,36 @@ export default function HomePage() {
         ...x,
         subtitle: t.toolsSubtitleByName[x.name as keyof typeof t.toolsSubtitleByName] ?? x.subtitle,
     }));
+
+    // ✅ FORM: handler submit (AGGIUNTA SOLO QUI)
+    async function onSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        if (sending) return;
+
+        setStatus(null);
+        setSending(true);
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, message }),
+            });
+
+            if (!res.ok) {
+                setStatus("error");
+            } else {
+                setStatus("ok");
+                setName("");
+                setEmail("");
+                setMessage("");
+            }
+        } catch {
+            setStatus("error");
+        } finally {
+            setSending(false);
+        }
+    }
 
     return (
         <main
@@ -477,12 +514,15 @@ export default function HomePage() {
                                 </div>
                             </div>
 
-                            <form className="mt-6 grid gap-4 lg:grid-cols-2">
+                            {/* ✅ FORM: aggiunto onSubmit, senza cambiare classi/layout */}
+                            <form className="mt-6 grid gap-4 lg:grid-cols-2" onSubmit={onSubmit}>
                                 <div className="lg:col-span-1">
                                     <label className="mb-2 block text-xs text-black/60 dark:text-white/60">
                                         {t.form.name}
                                     </label>
                                     <input
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
                                         placeholder={t.form.namePh}
                                         className="w-full rounded-lg bg-white px-4 py-2.5 text-sm ring-1 ring-black/10 dark:bg-zinc-950 dark:ring-white/10 dark:text-white"
                                     />
@@ -493,6 +533,8 @@ export default function HomePage() {
                                         {t.form.email}
                                     </label>
                                     <input
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         placeholder={t.form.emailPh}
                                         className="w-full rounded-lg bg-white px-4 py-2.5 text-sm ring-1 ring-black/10 dark:bg-zinc-950 dark:ring-white/10 dark:text-white"
                                     />
@@ -503,6 +545,8 @@ export default function HomePage() {
                                         {t.form.message}
                                     </label>
                                     <textarea
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
                                         rows={7}
                                         placeholder={t.form.messagePh}
                                         className="w-full rounded-lg bg-white px-4 py-2.5 text-sm ring-1 ring-black/10 dark:bg-zinc-950 dark:ring-white/10 dark:text-white"
@@ -511,11 +555,24 @@ export default function HomePage() {
 
                                 <button
                                     type="submit"
+                                    disabled={sending}
                                     className="lg:col-span-2 w-full rounded-lg bg-black px-5 py-3 text-sm font-medium text-white
                              dark:bg-orange-500 dark:text-black"
                                 >
-                                    {t.form.submit}
+                                    {sending ? "..." : t.form.submit}
                                 </button>
+
+                                {/* ✅ feedback minimo (non cambia layout) */}
+                                {status === "ok" && (
+                                    <div className="lg:col-span-2 text-xs text-black/60 dark:text-white/60">
+                                        {lang === "it" ? "Messaggio inviato!" : "Message sent!"}
+                                    </div>
+                                )}
+                                {status === "error" && (
+                                    <div className="lg:col-span-2 text-xs text-black/60 dark:text-white/60">
+                                        {lang === "it" ? "Errore nell’invio. Riprova." : "Sending failed. Please try again."}
+                                    </div>
+                                )}
 
                                 <div className="lg:col-span-2 h-32" />
                             </form>
