@@ -358,27 +358,17 @@ export default function HomePage() {
                             <p className="mt-3 text-sm leading-relaxed text-justify text-black/75 dark:text-white/70">
                                 {lang === "it" ? (
                                     <>
-                                        Sono un neolaureato in Ingegneria del Cinema e dei Mezzi di Comunicazione al{" "}
-                                        <span className="font-bold">Politecnico di Torino</span>, con un interesse crescente per lo sviluppo software e la
-                                        risoluzione di problemi a livello di sistema.
+                                        Sono un neolaureato in Ingegneria del Cinema e dei Mezzi di Comunicazione al <span className="font-bold">Politecnico di Torino</span>.
+                                        Nel tempo mi sono avvicinato allo sviluppo software, interessandomi soprattutto a come vengono progettate le applicazioni e ai principi che ne guidano la struttura.
+                                        Questo mi ha aiutato a imparare nuove tecnologie con rapidità e ad <span className="font-bold">adattarmi con naturalezza a contesti tecnici diversi</span>.
                                         <br />
                                         <br />
-                                        Il mio percorso unisce formazione creativa e mentalità ingegneristica, aiutandomi ad affrontare la tecnologia in modo
-                                        strutturato e pratico.
+                                        Prima di completare la laurea ho maturato diverse esperienze nel settore cinematografico, collaborando all’interno di team con scadenze strette e feedback continui.
+                                        Queste esperienze hanno rafforzato le mie capacità di comunicazione, il lavoro di squadra e la gestione di situazioni complesse.
                                         <br />
                                         <br />
-                                        Durante gli studi ho costruito una base solida su come funzionano i sistemi software: dalla gestione dei dati alla logica
-                                        applicativa. Questo mi ha aiutato a <span className="font-bold">imparare rapidamente nuove tecnologie</span> e{" "}
-                                        <span className="font-bold">adattarmi a contesti tecnici non familiari</span>.
-                                        <br />
-                                        <br />
-                                        Prima di completare la laurea ho lavorato anche in ambienti di produzione creativa, collaborando con team con scadenze
-                                        strette e feedback frequenti. Queste esperienze mi hanno insegnato a comunicare chiaramente, lavorare bene con gli altri e
-                                        rimanere focalizzato in workflow complessi.
-                                        <br />
-                                        <br />
-                                        Oggi applico queste competenze per crescere come junior software developer, con un focus su sistemi affidabili, data-driven e
-                                        apprendimento continuo tramite progetti pratici e sperimentazione.
+                                        Oggi sto mettendo in pratica queste competenze per crescere come <span className="font-bold">junior software developer</span>, continuando a imparare attraverso progetti concreti e sperimentazione.
+                                        Mi interessa lavorare su soluzioni solide e ben strutturate, cercando di migliorare nel tempo sia dal punto di vista tecnico sia nel modo di affrontare i problemi
                                     </>
                                 ) : (
                                     <>
