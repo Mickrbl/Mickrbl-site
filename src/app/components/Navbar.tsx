@@ -268,12 +268,17 @@ export default function Navbar() {
 
                     <div
                         className={[
-                            "absolute top-full mt-2 left-1/2 -translate-x-1/2 w-72 rounded-3xl bg-white/80 p-4 shadow-md backdrop-blur dark:bg-zinc-950/70",
+                            // ✅ mobile: fixed e centrato sulla barra (viewport)
+                            // ✅ lg+: torna come prima (centrato sull'icona settings)
+                            "fixed top-full left-1/2 -translate-x-1/2 w-72 rounded-3xl bg-white/80 p-4 shadow-md backdrop-blur dark:bg-zinc-950/70",
+                            "lg:absolute lg:top-full lg:mt-2 lg:left-1/2 lg:-translate-x-1/2",
                             "transition-all duration-300 ease-out",
                             open ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-4 pointer-events-none",
                         ].join(" ")}
                     >
-                        <div className="mb-3 text-sm font-semibold text-black/90 dark:text-white/90">{t.nav.settings}</div>
+                        <div className="mb-3 text-sm font-semibold text-black/90 dark:text-white/90">
+                            {t.nav.settings}
+                        </div>
 
                         <div className="space-y-4">
                             <LanguageRow

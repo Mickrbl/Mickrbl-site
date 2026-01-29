@@ -307,7 +307,7 @@ export default function HomePage() {
 
                                 <p className="mt-4 text-sm leading-relaxed text-black/70 dark:text-white/70">
                                     {lang === "it"
-                                        ? "Junior software developer interessato a costruire sistemi software e applicazioni affidabili e data-driven."
+                                        ? "Junior software developer | Applicazioni e architetture software."
                                         : "Junior software developer interested in building reliable, data-driven software systems and applications."}
                                 </p>
 
