@@ -4,10 +4,10 @@ import Navbar from "@/app/components/Navbar";
 import { AppProvider } from "@/app/context/AppContext";
 
 export const metadata: Metadata = {
-    title: "Mickol Roe Baronia Lasquety — Portfolio",
-    description: "Portfolio di Mickol Roe Baronia Lasquety. Bio, progetti e contatti.",
+    title: "Mickol Roe Baronia Lasquety",
+    description: "Mickol Roe Baronia Lasquety | Software Developer",
     icons: {
-        icon: "/favicon.png", // oppure /favicon.ico
+        icon: "/icon.png", // oppure /favicon.ico
     },
 };
 
