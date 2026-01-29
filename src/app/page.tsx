@@ -358,7 +358,7 @@ export default function HomePage() {
                             <p className="mt-3 text-sm leading-relaxed text-justify text-black/75 dark:text-white/70">
                                 {lang === "it" ? (
                                     <>
-                                        Sono un neolaureato in Ingegneria del Cinema e dei Mezzi di Comunicazione al <span className="font-bold">Politecnico di Torino</span>.
+                                        Sono Mickol Roe Baronia Lasquety, neolaureato in Ingegneria del Cinema e dei Mezzi di Comunicazione al <span className="font-bold">Politecnico di Torino</span>.
                                         Nel tempo mi sono avvicinato allo sviluppo software, interessandomi soprattutto a come vengono progettate le applicazioni e ai principi che ne guidano la struttura.
                                         Questo mi ha aiutato a imparare nuove tecnologie con rapidità e ad <span className="font-bold">adattarmi con naturalezza a contesti tecnici diversi</span>.
                                         <br />

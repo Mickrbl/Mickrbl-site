@@ -20,7 +20,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         const savedLang = (localStorage.getItem("lang") as Lang) ?? "it";
-
         const savedTheme = localStorage.getItem("theme") as Theme | null;
         const systemPrefersDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
         const initialTheme: Theme = savedTheme ?? (systemPrefersDark ? "dark" : "light");
