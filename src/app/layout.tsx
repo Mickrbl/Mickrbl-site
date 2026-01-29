@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     title: "Mickol Roe Baronia Lasquety",
     description: "Mickol Roe Baronia Lasquety | Software Developer",
     icons: {
-        icon: "/icon.png", // oppure /favicon.ico
+        icon: "/icon.png",
     },
 };
 
