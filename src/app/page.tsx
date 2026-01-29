@@ -1,194 +1,545 @@
-import Link from "next/link";
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { useApp } from "@/app/context/AppContext";
+import { dict } from "@/app/i18n";
+
+/* -------------------- TYPES -------------------- */
+
+type Project = {
+    title: string;
+    image: string;
+    href: string;
+    tags?: string[];
+};
+
+type Tool = {
+    name: string;
+    subtitle: string;
+    icon: string;
+};
+
+/* -------------------- DATA -------------------- */
+
+const projects: Project[] = [
+    {
+        title: "CrimeUK – Geospatial Crime Data Visualization Platform",
+        image: "/crimeuk_image.png",
+        href: "https://crime-uk.vercel.app/",
+        tags: ["React", "Typescript", "REST API", "useReducer", "Interactive Maps"],
+    },
+    {
+        title: "DoughFinder – Crowdfunding App",
+        image: "/doughfinder_miniature.png",
+        href: "https://doughfinder.onrender.com/",
+        tags: ["Python", "Flask", "Jinja2", "PostgreSQL", "Cloudinary"],
+    },
+];
+
+const technologies: Tool[] = [
+    { name: "Python", subtitle: "Programming Language", icon: "/python.png" },
+    { name: "SQL", subtitle: "Relational Databases", icon: "/sql.png" },
+    { name: "JavaScript", subtitle: "Programming Language", icon: "/js.png" },
+    { name: "TypeScript", subtitle: "Programming Language", icon: "/typescript.png" },
+    { name: "React", subtitle: "UI Library", icon: "/reacts.png" },
+    { name: "Next.js", subtitle: "React Framework", icon: "/next.png" },
+    { name: "Flask", subtitle: "Backend Framework (Python)", icon: "/flasks.png" },
+    { name: "Tailwindcss/Bootstrap", subtitle: "CSS Frameworks", icon: "/tail_boot.png" },
+];
+
+const tools: Tool[] = [
+    { name: "Git", subtitle: "Version Control System", icon: "/git.png" },
+    { name: "GitHub", subtitle: "Code Hosting & Collaboration", icon: "/github.png" },
+    { name: "Vercel", subtitle: "Hosting Platform", icon: "/vercels.png" },
+    { name: "PostgreSQL", subtitle: "Relational Database", icon: "/postgresql.png" },
+    { name: "Cloudinary", subtitle: "Media Storage", icon: "/cloudinary.png" },
+];
+
+/* -------------------- REVEAL ON SCROLL -------------------- */
+
+function Reveal({
+                    children,
+                    className = "",
+                    delayMs = 0,
+                }: {
+    children: React.ReactNode;
+    className?: string;
+    delayMs?: number;
+}) {
+    const ref = useRef<HTMLDivElement | null>(null);
+    const [shown, setShown] = useState(false);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+
+        const obs = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setShown(true);
+                    obs.disconnect();
+                }
+            },
+            { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+        );
+
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, []);
+
+    return (
+        <div
+            ref={ref}
+            className={[
+                "transition-all duration-700 ease-out will-change-transform",
+                shown ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3",
+                className,
+            ].join(" ")}
+            style={{ transitionDelay: `${delayMs}ms` }}
+        >
+            {children}
+        </div>
+    );
+}
+
+/* -------------------- ICONS -------------------- */
+
+function ArrowIcon({ className = "h-5 w-5" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h8v8" />
+        </svg>
+    );
+}
+
+function GitHubIcon() {
+    return (
+        <svg viewBox="0 0 24 24" className="h-[20px] w-[20px]" fill="currentColor" aria-hidden="true">
+            <path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.77.6-3.35-1.34-3.35-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.64-1.34-2.21-.25-4.54-1.1-4.54-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0112 6.8c.85 0 1.71.12 2.51.34 1.9-1.29 2.74-1.02 2.74-1.02.56 1.38.21 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.67-4.57 4.92.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z" />
+        </svg>
+    );
+}
+
+function LinkedInIcon() {
+    return (
+        <svg viewBox="0 0 24 24" className="h-[20px] w-[20px]" fill="currentColor" aria-hidden="true">
+            <path d="M20.45 20.45h-3.56v-5.6c0-1.34-.03-3.07-1.87-3.07-1.88 0-2.16 1.46-2.16 2.97v5.7H9.3V9h3.41v1.56h.05c.48-.9 1.65-1.85 3.4-1.85 3.63 0 4.3 2.39 4.3 5.5v6.24zM5.34 7.43a2.07 2.07 0 110-4.14 2.07 2.07 0 010 4.14zM3.56 20.45h3.56V9H3.56v11.45z" />
+        </svg>
+    );
+}
+
+function InstagramIcon() {
+    return (
+        <svg viewBox="0 0 24 24" className="h-[20px] w-[20px]" fill="currentColor" aria-hidden="true">
+            <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm10 2H7a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3zm-5 4.2a3.8 3.8 0 110 7.6 3.8 3.8 0 010-7.6zM12 10a2 2 0 100 4 2 2 0 000-4zm5.6-2.1a.9.9 0 110 1.8.9.9 0 010-1.8z" />
+        </svg>
+    );
+}
+
+function MailIcon() {
+    return (
+        <svg viewBox="0 0 24 24" className="h-[20px] w-[20px]" fill="currentColor" aria-hidden="true">
+            <path d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm2 0l6 4.5L18 6H6zm12 2.5l-6 4.5-6-4.5V18h12V8.5z" />
+        </svg>
+    );
+}
+
+/* -------------------- COMPONENTS -------------------- */
+
+function ProjectRow({ p }: { p: Project }) {
+    return (
+        <a
+            href={p.href}
+            target="_blank"
+            rel="noreferrer"
+            className="group relative block w-full overflow-hidden rounded-3xl transition-all duration-300 hover:bg-black/[0.06] dark:hover:bg-white/[0.10]"
+        >
+            <div className="pointer-events-none absolute right-5 top-5 text-orange-800/80 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 dark:text-orange-400/80">
+                <ArrowIcon />
+            </div>
+
+            <div className="flex items-center gap-4 px-5 py-4 sm:gap-5 sm:px-6 sm:py-5">
+                <div className="relative w-20 shrink-0 overflow-hidden rounded-2xl bg-black/10 sm:w-24 md:w-28 dark:bg-white/10">
+                    <div className="relative aspect-[10/11] w-full">
+                        <Image
+                            src={p.image}
+                            alt={p.title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        />
+                    </div>
+                </div>
+
+                <div className="min-w-0 flex-1 pr-10">
+                    {/* ✅ FIX: in dark, hover stays white */}
+                    <h3 className="text-base font-semibold tracking-tight text-black/90 transition-colors group-hover:text-black sm:text-lg dark:text-white dark:group-hover:text-white">
+                        {p.title}
+                    </h3>
+
+                    {p.tags && (
+                        <div className="mt-2 flex flex-wrap gap-2">
+                            {p.tags.map((t) => (
+                                <span
+                                    key={t}
+                                    className="rounded-full bg-black/[0.06] px-2.5 py-1 text-[10px] leading-none text-black/70 transition-colors group-hover:bg-black/[0.12]
+                             dark:bg-white/[0.10] dark:text-white/70 dark:group-hover:bg-white/[0.16]"
+                                >
+                  {t}
+                </span>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+        </a>
+    );
+}
+
+function ViewAllProjectsRow({ label }: { label: string }) {
+    return (
+        <a href="/projects" className="group relative block w-full overflow-hidden rounded-3xl bg-transparent">
+            <div className="pointer-events-none absolute right-5 top-5 text-black/45 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 dark:text-white/45">
+                <ArrowIcon />
+            </div>
+
+            <div className="flex items-center justify-end px-5 py-4 sm:px-6 sm:py-5">
+        <span className="pr-10 text-xs font-medium tracking-tight text-black/55 transition-colors duration-300 group-hover:text-black dark:text-white/55 dark:group-hover:text-white">
+          {label}
+        </span>
+            </div>
+        </a>
+    );
+}
+
+function TechCard({ t }: { t: Tool }) {
+    return (
+        <div className="flex items-center gap-4 rounded-3xl bg-white/70 p-5 shadow-md backdrop-blur dark:bg-zinc-900/70">
+            <div className="relative h-14 w-14 overflow-hidden rounded-2xl bg-white shadow-sm">
+                <Image src={t.icon} alt={t.name} fill className="object-contain p-2" />
+            </div>
+
+            <div>
+                <div className="text-base font-semibold tracking-tight text-black/90 dark:text-white">
+                    {t.name}
+                </div>
+                <div className="mt-1 text-sm text-black/60 dark:text-white/60">{t.subtitle}</div>
+            </div>
+        </div>
+    );
+}
+
+/* -------------------- PAGE -------------------- */
 
 export default function HomePage() {
+    const [pageIn, setPageIn] = useState(false);
+
+    const { lang } = useApp();
+    const t = dict[lang].homePage;
+
+    useEffect(() => {
+        const id = requestAnimationFrame(() => setPageIn(true));
+        return () => cancelAnimationFrame(id);
+    }, []);
+
+    useEffect(() => {
+        function scrollFromHash() {
+            const id = window.location.hash.replace("#", "");
+            if (!id) return;
+
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        scrollFromHash();
+        window.addEventListener("hashchange", scrollFromHash);
+        return () => window.removeEventListener("hashchange", scrollFromHash);
+    }, []);
+
+    const accent = "dark:text-orange-500";
+
+    // ✅ Traduzione “subtitles” senza cambiare i data array
+    const technologiesT: Tool[] = technologies.map((x) => ({
+        ...x,
+        subtitle: t.techSubtitleByName[x.name as keyof typeof t.techSubtitleByName] ?? x.subtitle,
+    }));
+
+    const toolsT: Tool[] = tools.map((x) => ({
+        ...x,
+        subtitle: t.toolsSubtitleByName[x.name as keyof typeof t.toolsSubtitleByName] ?? x.subtitle,
+    }));
+
     return (
-        <main className="mx-auto max-w-5xl px-4 py-12">
-            {/* HERO */}
-            <section className="space-y-6">
-                <div
-                    className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
-                    <div className="absolute inset-0 -z-10 overflow-hidden">
-                        <svg aria-hidden="true"
-                             className="absolute top-0 left-[max(50%,25rem)] h-256 w-512 -translate-x-1/2 mask-[radial-gradient(64rem_64rem_at_top,white,transparent)] stroke-gray-200">
-                            <defs>
-                                <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%"
-                                         y="-1" patternUnits="userSpaceOnUse">
-                                    <path d="M100 200V.5M.5 .5H200" fill="none"/>
-                                </pattern>
-                            </defs>
-                            <svg x="50%" y="-1" className="overflow-visible fill-gray-50">
-                                <path
-                                    d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
-                                    stroke-width="0"/>
-                            </svg>
-                            <rect width="100%" height="100%" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)"
-                                  stroke-width="0"/>
-                        </svg>
-                    </div>
-                    <div
-                        className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
-                        <div
-                            className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-                            <div className="lg:pr-4">
-                                <div className="lg:max-w-lg">
-                                    <p className="text-base/7 font-semibold text-indigo-600">Deploy faster</p>
-                                    <h1 className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">A
-                                        better workflow</h1>
-                                    <p className="mt-6 text-xl/8 text-gray-700">Aliquet nec orci mattis amet quisque
-                                        ullamcorper neque, nibh sem. At arcu, sit dui mi, nibh dui, diam eget aliquam.
-                                        Quisque id at vitae feugiat egestas.</p>
+        <main
+            className={[
+                "mx-auto max-w-6xl px-4 pt-28 pb-12 transition-all duration-700 ease-out",
+                pageIn ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3",
+            ].join(" ")}
+        >
+            <div className="grid gap-10 lg:grid-cols-[380px_1fr]">
+                {/* LEFT — STICKY CARD */}
+                <aside className="lg:sticky lg:top-28 lg:self-start">
+                    <Reveal>
+                        <div className="rounded-3xl bg-white/70 p-6 shadow-md backdrop-blur dark:bg-zinc-900/70">
+                            <div className="mx-auto w-full max-w-[240px]">
+                                <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl bg-black/10 dark:bg-white/10">
+                                    <Image
+                                        src="/profilepic.png"
+                                        alt="Mickol Roe Baronia Lasquety"
+                                        fill
+                                        className="object-cover"
+                                        priority
+                                    />
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            className="-mt-12 -ml-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-                            <img
-                                src="https://tailwindcss.com/plus-assets/img/component-images/dark-project-app-screenshot.png"
-                                alt=""
-                                className="w-3xl max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-228"/>
-                        </div>
-                        <div
-                            className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-                            <div className="lg:pr-4">
-                                <div className="max-w-xl text-base/7 text-gray-600 lg:max-w-lg">
-                                    <p>Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis
-                                        mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio
-                                        penatibus risus viverra tellus varius sit neque erat velit. Faucibus commodo
-                                        massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed
-                                        amet vitae sed turpis id.</p>
-                                    <ul role="list" className="mt-8 space-y-8 text-gray-600">
-                                        <li className="flex gap-x-3">
-                                            <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon"
-                                                 aria-hidden="true" className="mt-1 size-5 flex-none text-indigo-600">
-                                                <path
-                                                    d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm3.75-2.75a.75.75 0 0 0 1.5 0V9.66l1.95 2.1a.75.75 0 1 0 1.1-1.02l-3.25-3.5a.75.75 0 0 0-1.1 0l-3.25 3.5a.75.75 0 1 0 1.1 1.02l1.95-2.1v4.59Z"
-                                                    clip-rule="evenodd" fill-rule="evenodd"/>
-                                            </svg>
-                                            <span><strong
-                                                className="font-semibold text-gray-900">Push to deploy.</strong> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.</span>
-                                        </li>
-                                        <li className="flex gap-x-3">
-                                            <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon"
-                                                 aria-hidden="true" className="mt-1 size-5 flex-none text-indigo-600">
-                                                <path
-                                                    d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z"
-                                                    clip-rule="evenodd" fill-rule="evenodd"/>
-                                            </svg>
-                                            <span><strong
-                                                className="font-semibold text-gray-900">SSL certificates.</strong> Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.</span>
-                                        </li>
-                                        <li className="flex gap-x-3">
-                                            <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon"
-                                                 aria-hidden="true" className="mt-1 size-5 flex-none text-indigo-600">
-                                                <path
-                                                    d="M4.632 3.533A2 2 0 0 1 6.577 2h6.846a2 2 0 0 1 1.945 1.533l1.976 8.234A3.489 3.489 0 0 0 16 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234Z"/>
-                                                <path
-                                                    d="M4 13a2 2 0 1 0 0 4h12a2 2 0 1 0 0-4H4Zm11.24 2a.75.75 0 0 1 .75-.75H16a.75.75 0 0 1 .75.75v.01a.75.75 0 0 1-.75.75h-.01a.75.75 0 0 1-.75-.75V15Zm-2.25-.75a.75.75 0 0 0-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 0 0 .75-.75V15a.75.75 0 0 0-.75-.75h-.01Z"
-                                                    clip-rule="evenodd" fill-rule="evenodd"/>
-                                            </svg>
-                                            <span><strong
-                                                className="font-semibold text-gray-900">Database backups.</strong> Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.</span>
-                                        </li>
-                                    </ul>
-                                    <p className="mt-8">Et vitae blandit facilisi magna lacus commodo. Vitae sapien duis
-                                        odio id et. Id blandit molestie auctor fermentum dignissim. Lacus diam tincidunt
-                                        ac cursus in vel. Mauris varius vulputate et ultrices hac adipiscing egestas.
-                                        Iaculis convallis ac tempor et ut. Ac lorem vel integer orci.</p>
-                                    <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">No server? No
-                                        problem.</h2>
-                                    <p className="mt-6">Id orci tellus laoreet id ac. Dolor, aenean leo, ac etiam
-                                        consequat in. Convallis arcu ipsum urna nibh. Pharetra, euismod vitae interdum
-                                        mauris enim, consequat vulputate nibh. Maecenas pellentesque id sed tellus
-                                        mauris, ultrices mauris. Tincidunt enim cursus ridiculus mi. Pellentesque nam
-                                        sed nullam sed diam turpis ipsum eu a sed convallis diam.</p>
+
+                            <div className="mt-5 text-center">
+                                <h1 className="whitespace-nowrap text-2xl font-semibold tracking-tight dark:text-white">
+                                    Mickol Roe Baronia Lasquety
+                                </h1>
+
+                                <p className="mt-1 text-sm text-black/70 dark:text-white/70">
+                                    {t.profileLine}
+                                </p>
+
+                                <p className="mt-4 text-sm leading-relaxed text-black/70 dark:text-white/70">
+                                    {lang === "it"
+                                        ? "Junior software developer interessato a costruire sistemi software e applicazioni affidabili e data-driven."
+                                        : "Junior software developer interested in building reliable, data-driven software systems and applications."}
+                                </p>
+
+                                <div className="mt-6 flex justify-center gap-3 text-orange-600 dark:text-orange-400">
+                                    {[
+                                        { href: "https://github.com/Mickrbl", label: "GitHub", Icon: GitHubIcon },
+                                        { href: "https://linkedin.com/in/mickolroe", label: "LinkedIn", Icon: LinkedInIcon },
+                                        { href: "https://www.instagram.com/struggle_time", label: "Instagram", Icon: InstagramIcon },
+                                        { href: "mailto:mickol.lasquety@gmail.com", label: "Email", Icon: MailIcon },
+                                    ].map(({ href, label, Icon }) => (
+                                        <a
+                                            key={label}
+                                            href={href}
+                                            target={href.startsWith("mailto:") ? undefined : "_blank"}
+                                            rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
+                                            className="rounded-2xl p-2 transition hover:bg-black/[0.06] dark:hover:bg-white/[0.08]"
+                                            aria-label={label}
+                                            title={label}
+                                        >
+                                            <Icon />
+                                        </a>
+                                    ))}
                                 </div>
+
+                                <a
+                                    href="/cv.pdf"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-black px-4 py-2.5 text-sm font-medium text-white hover:opacity-90
+                             dark:bg-orange-500 dark:text-black"
+                                >
+                                    Get my CV
+                                </a>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </Reveal>
+                </aside>
 
-            </section>
+                {/* RIGHT — CONTENT */}
+                <section className="space-y-16">
+                    {/* ABOUT ME */}
+                    <Reveal>
+                        <section id="home" className="scroll-mt-28">
+                            <h2 className="text-3xl font-semibold uppercase tracking-wide dark:text-white">
+                                {t.aboutTitle}
+                            </h2>
 
-            {/* SKILLS */}
-            <section className="mt-14">
-                <h2 className="text-lg font-semibold tracking-tight">Stack</h2>
-                <div className="mt-4 flex flex-wrap gap-2">
-                    {[
-                        "React",
-                        "Next.js",
-                        "TypeScript",
-                        "Tailwind",
-                        "REST APIs",
-                        "Git/GitHub",
-                    ].map((s) => (
-                        <span
-                            key={s}
-                            className="rounded-full border border-black/10 bg-black/[0.02] px-3 py-1 text-sm text-black/80"
-                        >
-              {s}
-            </span>
-                    ))}
-                </div>
-            </section>
+                            <p className="mt-3 text-sm leading-relaxed text-justify text-black/75 dark:text-white/70">
+                                {lang === "it" ? (
+                                    <>
+                                        Sono un neolaureato in Ingegneria del Cinema e dei Mezzi di Comunicazione al{" "}
+                                        <span className="font-bold">Politecnico di Torino</span>, con un interesse crescente per lo sviluppo software e la
+                                        risoluzione di problemi a livello di sistema.
+                                        <br />
+                                        <br />
+                                        Il mio percorso unisce formazione creativa e mentalità ingegneristica, aiutandomi ad affrontare la tecnologia in modo
+                                        strutturato e pratico.
+                                        <br />
+                                        <br />
+                                        Durante gli studi ho costruito una base solida su come funzionano i sistemi software: dalla gestione dei dati alla logica
+                                        applicativa. Questo mi ha aiutato a <span className="font-bold">imparare rapidamente nuove tecnologie</span> e{" "}
+                                        <span className="font-bold">adattarmi a contesti tecnici non familiari</span>.
+                                        <br />
+                                        <br />
+                                        Prima di completare la laurea ho lavorato anche in ambienti di produzione creativa, collaborando con team con scadenze
+                                        strette e feedback frequenti. Queste esperienze mi hanno insegnato a comunicare chiaramente, lavorare bene con gli altri e
+                                        rimanere focalizzato in workflow complessi.
+                                        <br />
+                                        <br />
+                                        Oggi applico queste competenze per crescere come junior software developer, con un focus su sistemi affidabili, data-driven e
+                                        apprendimento continuo tramite progetti pratici e sperimentazione.
+                                    </>
+                                ) : (
+                                    <>
+                                        I am a recent graduate in Cinema and Media Engineering at{" "}
+                                        <span className="font-bold">Politecnico di Torino</span>, with a growing interest in software development and system-level
+                                        problem solving. My background combines creative training with an engineering mindset, which helps me work with technology in
+                                        a structured and practical way.
+                                        <br />
+                                        <br />
+                                        During my studies, I developed a solid understanding of how software systems work, from data handling to application logic.
+                                        This helped me develop the ability to <span className="font-bold">learn new technologies quickly</span> and{" "}
+                                        <span className="font-bold">adapt to unfamiliar technical environments</span>. I enjoy exploring how technical decisions
+                                        influence the behavior, reliability, and usability of an application.
+                                        <br />
+                                        <br />
+                                        Before completing my degree, I also worked in creative production environments, collaborating with teams under tight
+                                        deadlines and responding to frequent feedback. These experiences taught me how to communicate clearly, work effectively with
+                                        others, and stay focused in complex workflows.
+                                        <br />
+                                        <br />
+                                        I am currently applying these skills to grow as a junior software developer, with a particular focus on reliable, data-driven
+                                        systems and continuous learning through hands-on projects and experimentation.
+                                    </>
+                                )}
+                            </p>
+                        </section>
+                    </Reveal>
 
-            {/* ABOUT */}
-            <section className="mt-14 grid gap-6 sm:grid-cols-2">
-                <div className="rounded-3xl border border-black/10 p-6">
-                    <h2 className="text-lg font-semibold tracking-tight">Cosa faccio</h2>
-                    <p className="mt-3 text-sm leading-relaxed text-black/70">
-                        Sviluppo UI responsive e componenti riutilizzabili. Mi interessa
-                        scrivere codice leggibile, mantenibile e orientato all’utente.
-                    </p>
-                </div>
+                    {/* RECENT PROJECTS */}
+                    <Reveal>
+                        <section>
+                            <div className="leading-[0.82]">
+                                <h2 className="text-5xl font-extrabold tracking-tight sm:text-7xl dark:text-white">
+                                    {t.recentTitleTop}
+                                </h2>
+                                <div
+                                    className={[
+                                        "-mt-2 text-5xl font-extrabold tracking-tight opacity-25 sm:text-7xl",
+                                        accent,
+                                        "dark:opacity-100",
+                                    ].join(" ")}
+                                >
+                                    {t.recentTitleBottom}
+                                </div>
+                            </div>
 
-                <div className="rounded-3xl border border-black/10 p-6">
-                    <h2 className="text-lg font-semibold tracking-tight">Cosa cerco</h2>
-                    <p className="mt-3 text-sm leading-relaxed text-black/70">
-                        Opportunità in team dove posso crescere, contribuire e imparare:
-                        frontend, design systems, product engineering.
-                    </p>
-                </div>
-            </section>
+                            <div className="mt-6 space-y-0">
+                                {projects.map((p) => (
+                                    <ProjectRow key={p.title} p={p} />
+                                ))}
+                                <ViewAllProjectsRow label={t.viewAll} />
+                            </div>
+                        </section>
+                    </Reveal>
 
-            {/* CONTACT (placeholder, form dopo) */}
-            <section id="contact" className="mt-14 rounded-3xl border border-black/10 p-6">
-                <h2 className="text-lg font-semibold tracking-tight">Contatti</h2>
-                <p className="mt-3 text-sm text-black/70">
-                    Per ora ti lascio i link diretti. A breve aggiungiamo il form che invia
-                    davvero email.
-                </p>
+                    {/* TECHNOLOGIES */}
+                    <Reveal>
+                        <section>
+                            <div className="leading-[0.9]">
+                                <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl dark:text-white">
+                                    {t.technologiesTitle}
+                                </h2>
+                            </div>
 
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                    <a
-                        className="rounded-2xl bg-black px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
-                        href="mailto:tuamail@email.com?subject=Contatto%20dal%20portfolio"
-                    >
-                        Scrivimi via email
-                    </a>
+                            <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                                {technologiesT.map((x) => (
+                                    <TechCard key={x.name} t={x} />
+                                ))}
+                            </div>
+                        </section>
+                    </Reveal>
 
-                    <a
-                        href="https://github.com/USERNAME"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-2xl border border-black/15 px-5 py-2.5 text-sm font-medium hover:bg-black/[0.03]"
-                    >
-                        GitHub
-                    </a>
+                    {/* TOOLS */}
+                    <Reveal>
+                        <section>
+                            <div className="leading-[0.9]">
+                                <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl dark:text-white">
+                                    {t.toolsTitle}
+                                </h2>
+                            </div>
 
-                    <a
-                        href="https://www.linkedin.com/in/USERNAME/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-2xl border border-black/15 px-5 py-2.5 text-sm font-medium hover:bg-black/[0.03]"
-                    >
-                        LinkedIn
-                    </a>
-                </div>
-            </section>
+                            <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                                {toolsT.map((x) => (
+                                    <TechCard key={x.name} t={x} />
+                                ))}
+                            </div>
+                        </section>
+                    </Reveal>
 
-            <footer className="mt-14 py-6 text-sm text-black/50">
-                © {new Date().getFullYear()} Il Tuo Nome
-            </footer>
+                    {/* CONTACT */}
+                    <Reveal>
+                        <div className="lg:col-span-2 h-5" />
+                        <section id="contact" className="scroll-mt-28 mt-24 rounded-3xl bg-transparent p-0 shadow-none">
+                            <div className="leading-[0.78]">
+                                <h2 className="text-5xl font-extrabold tracking-tight sm:text-6xl dark:text-white">
+                                    {t.contactTop}
+                                </h2>
+                                <div
+                                    className={[
+                                        "-mt-2 text-5xl font-extrabold tracking-tight opacity-25 sm:text-6xl",
+                                        accent,
+                                        "dark:opacity-100",
+                                    ].join(" ")}
+                                >
+                                    {t.contactBottom}
+                                </div>
+                            </div>
+
+                            <form className="mt-6 grid gap-4 lg:grid-cols-2">
+                                <div className="lg:col-span-1">
+                                    <label className="mb-2 block text-xs text-black/60 dark:text-white/60">
+                                        {t.form.name}
+                                    </label>
+                                    <input
+                                        placeholder={t.form.namePh}
+                                        className="w-full rounded-lg bg-white px-4 py-2.5 text-sm ring-1 ring-black/10 dark:bg-zinc-950 dark:ring-white/10 dark:text-white"
+                                    />
+                                </div>
+
+                                <div className="lg:col-span-1">
+                                    <label className="mb-2 block text-xs text-black/60 dark:text-white/60">
+                                        {t.form.email}
+                                    </label>
+                                    <input
+                                        placeholder={t.form.emailPh}
+                                        className="w-full rounded-lg bg-white px-4 py-2.5 text-sm ring-1 ring-black/10 dark:bg-zinc-950 dark:ring-white/10 dark:text-white"
+                                    />
+                                </div>
+
+                                <div className="lg:col-span-2">
+                                    <label className="mb-2 block text-xs text-black/60 dark:text-white/60">
+                                        {t.form.message}
+                                    </label>
+                                    <textarea
+                                        rows={7}
+                                        placeholder={t.form.messagePh}
+                                        className="w-full rounded-lg bg-white px-4 py-2.5 text-sm ring-1 ring-black/10 dark:bg-zinc-950 dark:ring-white/10 dark:text-white"
+                                    />
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    className="lg:col-span-2 w-full rounded-lg bg-black px-5 py-3 text-sm font-medium text-white
+                             dark:bg-orange-500 dark:text-black"
+                                >
+                                    {t.form.submit}
+                                </button>
+
+                                <div className="lg:col-span-2 h-32" />
+                            </form>
+                        </section>
+                    </Reveal>
+
+                    {/* FOOTER */}
+                    <Reveal>
+                        <footer className="pt-6 text-sm text-black/50 dark:text-white/50">
+                            © {new Date().getFullYear()} Mickol Roe Baronia Lasquety
+                        </footer>
+                    </Reveal>
+                </section>
+            </div>
         </main>
     );
 }

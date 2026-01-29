@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/app/components/Navbar";
+import { AppProvider } from "@/app/context/AppContext";
 
 export const metadata: Metadata = {
-    title: "Mickol Roe Baronia Lasquety— Portfolio",
-    description: "Portfolio di Il Tuo Nome. Bio, progetti e contatti.",
+    title: "Mickol Roe Baronia Lasquety — Portfolio",
+    description: "Portfolio di Mickol Roe Baronia Lasquety. Bio, progetti e contatti.",
 };
 
-export default function RootLayout({
-                                       children,
-                                   }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="it">
-        <body className="min-h-screen bg-white text-black">
-        <Navbar />
-        {children}
+        <html lang="it" className="" suppressHydrationWarning>
+        <body className="min-h-screen bg-white text-black dark:bg-zinc-950 ">
+        <AppProvider>
+            <Navbar />
+            {children}
+        </AppProvider>
         </body>
         </html>
     );
