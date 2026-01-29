@@ -41,7 +41,7 @@ const technologies: Tool[] = [
     { name: "Python", subtitle: "Programming Language", icon: "/python.png" },
     { name: "SQL", subtitle: "Relational Databases", icon: "/sql.png" },
     { name: "JavaScript", subtitle: "Programming Language", icon: "/js.png" },
-    { name: "TypeScript", subtitle: "Programming Language", icon: "/typescript.png" },
+    { name: "TypeScript", subtitle: "Programming Language", icon: "/Typescript.png" },
     { name: "React", subtitle: "UI Library", icon: "/reacts.png" },
     { name: "Next.js", subtitle: "React Framework", icon: "/next.png" },
     { name: "Flask", subtitle: "Backend Framework (Python)", icon: "/flasks.png" },
