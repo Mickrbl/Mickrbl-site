@@ -69,7 +69,7 @@ export const dict = {
             ongoingDesc:
                 "Progetti aggiuntivi attualmente in sviluppo, inclusi un chatbot basato su LLM ed esercizi orientati ai sistemi.",
             bio:
-                "Junior software developer interessato a costruire sistemi software e applicazioni affidabili e data-driven.",
+                "Junior software developer | Applicazioni e architetture software.",
 
             // ✅ AGGIUNTE per far funzionare la pagina Projects
             cineLine:

@@ -73,7 +73,7 @@ export async function POST(req: Request) {
 
         // --- 1) Send email to you ---
         await resend.emails.send({
-            from: "Mickrbl Portfolio <contact@mickrbl.dev>",
+            from: "Mickrbl <contact@mickrbl.dev>",
             to: process.env.CONTACT_TO_EMAIL as string,
             subject: `New contact from ${name}`,
             replyTo: email,
