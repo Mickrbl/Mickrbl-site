@@ -47,14 +47,15 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json();
-        const { name, email, message, company } = body as {
+        const { name, email, message, company, lang } = body as {
             name?: string;
             email?: string;
             message?: string;
             company?: string; // honeypot
+            lang?: "it" | "en";
         };
 
-        // Honeypot: if filled, silently accept (or reject). I prefer silent accept.
+        // Honeypot: if filled, silently accept
         if (company && company.trim().length > 0) {
             return NextResponse.json({ ok: true });
         }
@@ -68,21 +69,38 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
         }
 
-        const to = process.env.CONTACT_TO_EMAIL;
-        const from = process.env.CONTACT_FROM_EMAIL;
+        const isIt = lang === "it";
 
-        if (!to || !from) {
-            return NextResponse.json({ error: "Email configuration missing" }, { status: 500 });
-        }
-
-        // --- Send email ---
+        // --- 1) Send email to you ---
         await resend.emails.send({
-            // Use a verified sender/domain in Resend (e.g. contact@mickrbl.dev)
-            from,
-            to,
+            from: "Mickrbl Portfolio <contact@mickrbl.dev>",
+            to: process.env.CONTACT_TO_EMAIL as string,
             subject: `New contact from ${name}`,
             replyTo: email,
             text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n`,
+        });
+
+        // --- 2) Auto-reply to the sender (IT/EN) ---
+        const autoSubject = isIt ? "Grazie per avermi scritto!" : "Thanks for reaching out!";
+        const autoText = isIt
+            ? `Ciao ${name},\n\n` +
+            `grazie per avermi scritto — ho ricevuto il tuo messaggio e ti risponderò il prima possibile.\n\n` +
+            `— Mickol\n\n` +
+            `---\n` +
+            `Copia del tuo messaggio:\n` +
+            `${message}\n`
+            : `Hi ${name},\n\n` +
+            `Thanks for reaching out — I received your message and I’ll get back to you as soon as possible.\n\n` +
+            `— Mickol\n\n` +
+            `---\n` +
+            `Your message (copy):\n` +
+            `${message}\n`;
+
+        await resend.emails.send({
+            from: "Mickol – Mickrbl <contact@mickrbl.dev>",
+            to: email,
+            subject: autoSubject,
+            text: autoText,
         });
 
         return NextResponse.json({ ok: true });
