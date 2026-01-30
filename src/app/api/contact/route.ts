@@ -68,12 +68,18 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
         }
 
+        const to = process.env.CONTACT_TO_EMAIL;
+        const from = process.env.CONTACT_FROM_EMAIL;
+
+        if (!to || !from) {
+            return NextResponse.json({ error: "Email configuration missing" }, { status: 500 });
+        }
+
         // --- Send email ---
         await resend.emails.send({
-            // IMPORTANT:
             // Use a verified sender/domain in Resend (e.g. contact@mickrbl.dev)
-            from: "Mickrbl Portfolio <contact@mickrbl.dev>",
-            to: process.env.CONTACT_TO_EMAIL as string,
+            from,
+            to,
             subject: `New contact from ${name}`,
             replyTo: email,
             text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n`,
