@@ -372,7 +372,7 @@ export default function HomePage() {
                                 </div>
 
                                 <a
-                                    href="/cv.pdf"
+                                    href="/cv_Mickol_Lasquety.pdf"
                                     target="_blank"
                                     rel="noreferrer"
                                     className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-black px-4 py-2.5 text-sm font-medium text-white hover:opacity-90
