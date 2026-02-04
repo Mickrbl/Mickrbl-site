@@ -27,7 +27,7 @@ export const dict = {
             contactBottom: "INSIEME",
 
             form: {
-                name: "Nome",
+                name: "Nome e Cognome",
                 namePh: "Il tuo nome",
                 email: "Email",
                 emailPh: "La tua email",
