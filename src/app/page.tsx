@@ -30,7 +30,7 @@ const projects: Project[] = [
         tags: ["React", "Typescript", "REST API", "useReducer", "Interactive Maps"],
     },
     {
-        title: "DoughFinder – Crowdfunding App",
+        title: "DoughFinder – Crowdfunding App (attualmente in migrazione da render a northflank)",
         image: "/doughfinder_miniature.png",
         href: "https://doughfinder.onrender.com/",
         tags: ["Python", "Flask", "Jinja2", "PostgreSQL", "Cloudinary"],
