@@ -158,24 +158,17 @@ function MailIcon() {
 /* -------------------- COMPONENTS -------------------- */
 
 function ProjectCard({ p, repoText }: { p: Project; repoText: string }) {
-    function openLive() {
-        window.open(p.liveUrl, "_blank", "noreferrer");
-    }
-
     function openRepo(e: React.MouseEvent) {
         e.stopPropagation();
         window.open(p.repoUrl, "_blank", "noreferrer");
     }
 
     return (
-        <div
-            onClick={openLive}
-            role="link"
-            tabIndex={0}
-            onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") openLive();
-            }}
-            className="group relative w-full cursor-pointer overflow-hidden rounded-3xl transition-all duration-300 hover:bg-black/[0.06] dark:hover:bg-white/[0.10]"
+        <a
+            href={p.liveUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="group relative block w-full cursor-pointer overflow-hidden rounded-3xl transition-all duration-300 hover:bg-black/[0.06] dark:hover:bg-white/[0.10]"
         >
             <div className="pointer-events-none absolute right-5 top-5 text-orange-800/80 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 dark:text-orange-400/80">
                 <ArrowIcon />
@@ -209,8 +202,8 @@ function ProjectCard({ p, repoText }: { p: Project; repoText: string }) {
                                     key={t}
                                     className="rounded-full bg-black/[0.06] px-2.5 py-1 text-[10px] leading-none text-black/70 transition-colors group-hover:bg-black/[0.12] dark:bg-white/[0.10] dark:text-white/70 dark:group-hover:bg-white/[0.16]"
                                 >
-                  {t}
-                </span>
+                                    {t}
+                                </span>
                             ))}
                         </div>
                     )}
@@ -222,17 +215,18 @@ function ProjectCard({ p, repoText }: { p: Project; repoText: string }) {
                             className="inline-flex items-center gap-2 text-left text-xs text-black/65 transition hover:text-black dark:text-white/60 dark:hover:text-white"
                             aria-label="Open GitHub repository"
                         >
-              <span className="text-black/70 dark:text-white/70">
-                <GitHubIcon />
-              </span>
+                            <span className="text-black/70 dark:text-white/70">
+                                <GitHubIcon />
+                            </span>
                             <span>{repoText}</span>
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     );
 }
+
 
 function OngoingCard({
                          title,
