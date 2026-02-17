@@ -33,7 +33,7 @@ const projects: Project[] = [
         description:
             "Full-stack web application with authentication, campaign management, donations, and cloud-based image storage.",
         image: "/doughfinder_miniature.png",
-        liveUrl: "https://doughfinder.onrender.com/",
+        liveUrl: "https://site--doughfinder--s6d5dq7mdt7r.code.run/",
         repoUrl: "https://github.com/Mickrbl/doughfinder",
         tags: ["Python", "Flask", "Jinja2", "PostgreSQL", "Cloudinary"],
     },
