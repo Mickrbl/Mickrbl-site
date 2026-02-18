@@ -34,6 +34,8 @@ Clone the repository:
 git clone https://github.com/YOUR-USERNAME/mickrbl.dev.git
 cd mickrbl.dev
 
+```
+
 Install dependencies:
 
 npm install
