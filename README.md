@@ -38,11 +38,11 @@ cd mickrbl.dev
 
 Install dependencies:
 
-npm install
+```npm install```
 
 Start development server:
 
-npm run dev
+```npm run dev```
 
 **Purpose**
 
