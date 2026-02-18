@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# mickrbl.dev
 
-## Getting Started
+Personal portfolio website showcasing software development projects, technical skills, and contact information.
 
-First, run the development server:
+🌐 Live Website: https://mickrbl.dev
+
+---
+
+## 🧱 Tech Stack
+
+- Node.js
+- Tailwind CSS
+- HTML
+- CSS
+- Deployed online
+
+---
+
+## ✨ Features
+
+- Responsive and minimal design
+- Project showcase section
+- Direct links to deployed applications
+- Contact section
+- Fast and lightweight structure
+
+---
+
+## 🛠️ Run Locally
+
+Clone the repository:
 
 ```bash
+git clone https://github.com/YOUR-USERNAME/mickrbl.dev.git
+cd mickrbl.dev
+
+Install dependencies:
+
+npm install
+
+Start development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Purpose**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This website serves as a central hub for my software development projects and technical profile, providing access to live applications and GitHub repositories.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+# 🇮🇹 Versione Italiana
 
-To learn more about Next.js, take a look at the following resources:
+mickrbl.dev è il mio sito portfolio personale, pensato per presentare progetti di sviluppo software, competenze tecniche e informazioni di contatto.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧱 Tecnologie utilizzate
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Node.js  
+- Tailwind CSS  
+- HTML  
+- CSS  
 
-## Deploy on Vercel
+## ✨ Caratteristiche
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Design responsive e minimale  
+- Sezione dedicata ai progetti sviluppati  
+- Link diretti alle applicazioni deployate  
+- Sezione contatti  
+- Struttura leggera e performante  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📌 Obiettivo
+
+Il sito funge da punto centrale per raccogliere e mostrare i miei progetti software, con collegamenti alle applicazioni live e ai repository GitHub.
