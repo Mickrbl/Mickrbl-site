@@ -406,8 +406,8 @@ export default function HomePage() {
                                         Queste esperienze hanno rafforzato le mie capacità di comunicazione, il lavoro di squadra e la gestione di situazioni complesse.
                                         <br />
                                         <br />
-                                        Oggi sto mettendo in pratica queste competenze per crescere come <span className="font-bold">junior software developer</span>, continuando a imparare attraverso progetti concreti e sperimentazione.
-                                        Mi interessa lavorare su soluzioni solide e ben strutturate, cercando di migliorare nel tempo sia dal punto di vista tecnico sia nel modo di affrontare i problemi
+                                        Ultimamente sto mettendo in pratica queste competenze per crescere come <span className="font-bold">junior software developer</span>, continuando a imparare attraverso progetti concreti e sperimentazione.
+                                        Mi interessa lavorare su soluzioni solide e ben strutturate, cercando di migliorare nel tempo sia dal punto di vista tecnico sia nel modo di affrontare i problemi.
                                     </>
                                 ) : (
                                     <>
