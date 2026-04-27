@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { useApp } from "@/app/context/AppContext";
 import { dict } from "@/app/i18n";
 
-/* -------------------- TYPES -------------------- */
 
 type Project = {
     title: string;
@@ -20,12 +19,11 @@ type Tool = {
     icon: string;
 };
 
-/* -------------------- DATA -------------------- */
 
 const projects: Project[] = [
     {
         title: "CrimeUK – Geospatial Crime Data Visualization Platform",
-        image: "/crimeuk_image.png",
+        image: "/crimeuk_image1.png",
         href: "https://crime-uk.vercel.app/",
         tags: ["React", "Typescript", "REST API", "useReducer", "Interactive Maps"],
     },

@@ -23,7 +23,7 @@ const projects: Project[] = [
         title: "CrimeUK – Geospatial Crime Data Visualization Platform",
         description:
             "Interactive web app for visualizing UK crime data on maps, with date and area-based filtering.",
-        image: "/crimeuk_image.png",
+        image: "/crimeuk_image1.png",
         liveUrl: "https://crime-uk.vercel.app/",
         repoUrl: "https://github.com/Mickrbl/CrimeUK",
         tags: ["React", "TypeScript", "REST API", "useReducer", "Interactive Maps"],
